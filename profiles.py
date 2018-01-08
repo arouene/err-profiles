@@ -15,10 +15,9 @@ def canonize_cmd(cmd_str):
     Canonize the command string into 'plugin:command' format
     """
     if ':' in cmd_str:
-        plugin, cmd = cmd_str.split(':')
-    else:
-        plugin, cmd = '*', cmd_str
-    return plugin + ':' + cmd, plugin, cmd
+        return cmd_str
+
+    return '*:' + cmd_str
 
 
 class Profiles(BotPlugin):
@@ -89,16 +88,20 @@ class Profiles(BotPlugin):
         if not cmd_str:
             return 'usage: !access add <cmd>'
 
-        command, plugin, cmd = canonize_cmd(cmd_str)
+        command = canonize_cmd(cmd_str)
 
         # Check if plugin or cmd match existing plugin or command
-        if plugin != '*':
-            if plugin not in self._bot.plugin_manager.get_all_active_plugin_names():
-                return 'plugin not found'
+        match = False
+        for c in self._bot.all_commands:
+            cmd = "{plugin}:{command}".format(
+                    plugin=self._bot.all_commands[c].__self__.name,
+                    command=c)
+            if fnmatch.fnmatch(cmd, command):
+                match = True
+                break
 
-        if cmd != '*':
-            if cmd not in self._bot.all_commands:
-                return 'command not found'
+        if not match:
+            return 'pattern does not match any command'
 
         with self.mutable('access') as access:
             if command not in access:
@@ -116,7 +119,7 @@ class Profiles(BotPlugin):
         if not cmd_str:
             return 'usage: !access del <cmd>'
 
-        command, _, _ = canonize_cmd(cmd_str)
+        command = canonize_cmd(cmd_str)
 
         with self.mutable('access') as access:
             if command not in access:
@@ -137,7 +140,7 @@ class Profiles(BotPlugin):
         cmd_str = args[0]
         group = args[1]
 
-        command, _, _ = canonize_cmd(cmd_str)
+        command = canonize_cmd(cmd_str)
 
         with self.mutable('access') as access:
             if command not in access:
@@ -159,7 +162,7 @@ class Profiles(BotPlugin):
         cmd_str = args[0]
         group = args[1]
 
-        command, _, _ = canonize_cmd(cmd_str)
+        command = canonize_cmd(cmd_str)
 
         with self.mutable('access') as access:
             if command not in access:
