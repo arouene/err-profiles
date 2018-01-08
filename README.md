@@ -36,5 +36,5 @@ ACLs management for errbot in errbot
 ### Remove group from acceding a restricted command
 * !access del group Plugin:* mygroup
 
-## Developement
+## Development
 Issues and PR are welcomes
