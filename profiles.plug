@@ -1,0 +1,9 @@
+[Core]
+name = Profiles
+module = profiles
+
+[Documentation]
+description = ACLs with user and group management
+
+[Python]
+version = 3
