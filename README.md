@@ -14,7 +14,7 @@ ACLs management for errbot in errbot
 * !access del Plugin:*
 * !access del my_command
 
-### List restrictions
+### Show restrictions
 * !access list
 
 ### Add groups
@@ -28,6 +28,9 @@ ACLs management for errbot in errbot
 
 ### Remove a user from a group
 * !group del user mygroup @myuser
+
+### Show groups
+* !group list
 
 ### Add a group to access restricted commands
 * !access add group Plugin:* mygroup
