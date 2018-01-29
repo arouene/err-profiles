@@ -3,6 +3,18 @@ ACLs management for errbot in errbot
 
 ## Install
 !repos install https://github.com/shengis/err-profiles.git
+```
+# Add an administrator group
+!group add administrators
+# Add a member to the administrator group
+!group add user administrators @user
+# Add the Profile plugin to the restricted access
+!access add Profiles:*
+# Authorize the administrator group to access
+!access add group Profiles:* administrators
+```
+
+These commands should be done by an errbot administrator to be able to use Profiles after adding it to the restricted access.
 
 ## Usage
 
