@@ -65,7 +65,7 @@ class Profiles(BotPlugin):
             return (msg, cmd, args)
 
         if not dry_run and not self.bot_config.HIDE_RESTRICTED_ACCESS:
-            self._bot.send_simple_reply("You're not allowed to access this command")
+            self._bot.send_simple_reply(msg, "You're not allowed to access this command")
 
         return BLOCK_COMMAND
 
